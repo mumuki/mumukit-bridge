@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/uqbar-project/mumukit-bridge.svg)](https://travis-ci.org/uqbar-project/mumukit-bridge)
+[![Code Climate](https://codeclimate.com/github/uqbar-project/mumukit-bridge/badges/gpa.svg)](https://codeclimate.com/github/uqbar-project/mumukit-bridge)
+[![Test Coverage](https://codeclimate.com/github/uqbar-project/mumukit-bridge/badges/coverage.svg)](https://codeclimate.com/github/uqbar-project/mumukit-bridge)
 
 
 # Mumukit::Bridge
