@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/uqbar-project/mumukit-bridge.svg)](https://travis-ci.org/uqbar-project/mumukit-bridge)
+
+
 # Mumukit::Bridge
 
 TODO: Write a gem description
