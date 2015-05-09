@@ -18,6 +18,20 @@ describe Bridge do
       it { expect(response[:status]).to eq('passed') }
       it { expect(response[:result]).to include('0 failures') }
       it { expect(response[:expectation_results]).to eq([]) }
+      it { expect(response[:feedback]).to eq('') }
+    end
+
+    context 'when submission is ok and has feedback' do
+      let(:server_response) { {
+          'out' => '0 failures',
+          'exit' => 'passed',
+          'feedback' => 'Keep up the good work!'
+      } }
+
+      it { expect(response[:status]).to eq('passed') }
+      it { expect(response[:result]).to include('0 failures') }
+      it { expect(response[:expectation_results]).to eq([]) }
+      it { expect(response[:feedback]).to eq('Keep up the good work!') }
     end
 
     context 'when submission is ok and has expectations' do
@@ -36,6 +50,7 @@ describe Bridge do
       it { expect(response[:status]).to eq('passed') }
       it { expect(response[:result]).to include('0 failures') }
       it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :passed}]) }
+      it { expect(response[:feedback]).to eq('') }
     end
 
     context 'when submission is not ok' do
@@ -44,6 +59,7 @@ describe Bridge do
       it { expect(response[:status]).to eq('failed') }
       it { expect(response[:result]).to include('should be equal 5 FAILED') }
       it { expect(response[:expectation_results]).to eq([]) }
+      it { expect(response[:feedback]).to eq('') }
     end
 
   end
