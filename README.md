@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/mumukit/mumukit-bridge.svg)](https://travis-ci.org/mumukit/mumukit-bridge)
-[![Code Climate](https://codeclimate.com/github/mumukit/mumukit-bridge/badges/gpa.svg)](https://codeclimate.com/github/mumukit/mumukit-bridge)
-[![Test Coverage](https://codeclimate.com/github/mumukit/mumukit-bridge/badges/coverage.svg)](https://codeclimate.com/github/mumukit/mumukit-bridge)
+[![Build Status](https://travis-ci.org/mumuki/mumukit-bridge.svg)](https://travis-ci.org/mumuki/mumukit-bridge)
+[![Code Climate](https://codeclimate.com/github/mumuki/mumukit-bridge/badges/gpa.svg)](https://codeclimate.com/github/mumuki/mumukit-bridge)
+[![Test Coverage](https://codeclimate.com/github/mumuki/mumukit-bridge/badges/coverage.svg)](https://codeclimate.com/github/mumuki/mumukit-bridge)
 
 
 # Mumukit::Bridge
