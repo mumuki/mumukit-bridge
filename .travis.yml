@@ -1,8 +1,15 @@
 language: ruby
-env: RACK_ENV=development
+env: RACK_ENV=development CODECLIMATE_REPO_TOKEN=46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
 rvm:
- - 2.0.0
+- 2.0.0
 addons:
-    code_climate:
-      repo_token: 46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
-env: CODECLIMATE_REPO_TOKEN=46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
+  code_climate:
+    repo_token: 46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
+deploy:
+  provider: rubygems
+  api_key:
+    secure: Rj4sZfGuZRT0ENDMO7nUMajrRaBtOv8W9oN8VBw5l7EoX9CIexIW0SeFEywLCR211sIAZxFLSvhUAmcWZvmtejQc99cJeOzMcci7Bm6HlLk5vX3P26NG1IQ3mDL0Hn3SvU88mp9Ej8/nKpU1MJnJ3+SU67/tNuNtqsZFCqOboUs=
+  gem: mumukit-bridge
+  on:
+    tags: true
+    repo: mumuki/mumukit-bridge
