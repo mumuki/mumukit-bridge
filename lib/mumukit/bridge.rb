@@ -1,5 +1,8 @@
 require 'mumukit/bridge/version'
 require 'mumukit/bridge/response_type'
+require 'mumukit/bridge/array'
+require 'mumukit/bridge/boolean'
+
 require 'rest_client'
 
 require 'active_support/hash_with_indifferent_access'

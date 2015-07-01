@@ -5,16 +5,16 @@ module Mumukit::Bridge
         expectation_results = parse_expectation_results(response['expectationResults'] || [])
         feedback = response['feedback'] || ''
 
-        build_hash(expectation_results, response).merge(
-            feedback: feedback,
-            expectation_results: expectation_results)
+        build_hash(response).
+            merge(feedback: feedback, expectation_results: expectation_results).
+            update(status: expectation_results.fetch_mumuki_status(:result)) { |_, t, e| global_status(t, e) }
       end
 
-      def global_status(test_status, expectations_results)
-        if test_status.to_sym == :passed && expectations_results.any? { |it| it[:result] == :failed }
+      def global_status(test_status, expectation_status)
+        if test_status == :passed && expectation_status == :failed
           :passed_with_warnings
         else
-          test_status.to_sym
+          test_status
         end
       end
 
@@ -22,18 +22,17 @@ module Mumukit::Bridge
         results.map do |it|
           {binding: it['expectation']['binding'],
            inspection: it['expectation']['inspection'],
-           result: it['result'] ? :passed : :failed}
+           result: it['result'].to_mumuki_status}
         end
       end
     end
 
     class Structured < Base
-      def build_hash(expectation_results, response)
+      def build_hash(response)
         test_results = parse_test_results(response['testResults'])
         {test_results_type: :structured,
          test_results: test_results,
-         status: global_status(
-             test_results[:test_results].any? { |it| it[:status] == :failed } ? :failed : :passed, expectation_results)}
+         status: test_results[:test_results].fetch_mumuki_status(:status)}
       end
 
       private
@@ -48,10 +47,10 @@ module Mumukit::Bridge
     end
 
     class Unstructured < Base
-      def build_hash(expectation_results, response)
+      def build_hash(response)
         {test_results: response['out'],
          test_results_type: :unstructured,
-         status: global_status(response['exit'], expectation_results)}
+         status: response['exit'].to_sym}
       end
     end
 
