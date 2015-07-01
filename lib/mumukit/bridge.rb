@@ -22,7 +22,7 @@ module Mumukit
         response = post_to_server(request)
         ResponseParser.parse response
       rescue Exception => e
-        {result: e.message, status: :failed}
+        {result: e.message, status: :errored}
       end
 
       def post_to_server(request)
