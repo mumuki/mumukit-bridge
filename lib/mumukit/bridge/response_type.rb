@@ -30,7 +30,7 @@ module Mumukit::Bridge
     class Structured < Base
       def build_hash(response)
         test_results = parse_test_results(response['testResults'])
-        {test_results_type: :structured,
+        {response_type: :structured,
          test_results: test_results,
          status: test_results[:test_results].fetch_mumuki_status(:status)}
       end
@@ -49,7 +49,7 @@ module Mumukit::Bridge
     class Unstructured < Base
       def build_hash(response)
         {test_results: response['out'],
-         test_results_type: :unstructured,
+         response_type: :unstructured,
          status: response['exit'].to_sym}
       end
     end
