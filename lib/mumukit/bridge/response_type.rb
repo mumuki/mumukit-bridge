@@ -4,9 +4,10 @@ module Mumukit::Bridge
       def parse(response)
         expectation_results = parse_expectation_results(response['expectationResults'] || [])
         feedback = response['feedback'] || ''
+        result = response['out'] || ''
 
         build_hash(response).
-            merge(feedback: feedback, expectation_results: expectation_results).
+            merge(feedback: feedback, expectation_results: expectation_results, result: result).
             update(status: expectation_results.fetch_mumuki_status(:result)) { |_, t, e| global_status(t, e) }
       end
 
@@ -48,8 +49,8 @@ module Mumukit::Bridge
 
     class Unstructured < Base
       def build_hash(response)
-        {test_results: response['out'],
-         response_type: :unstructured,
+        {response_type: :unstructured,
+         test_results: [],
          status: response['exit'].to_sym}
       end
     end

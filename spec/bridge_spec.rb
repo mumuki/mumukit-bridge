@@ -26,7 +26,7 @@ describe Bridge do
                                                        {title: 'true is true', status: :passed, result: ''},
                                                        {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
 
@@ -65,7 +65,7 @@ describe Bridge do
                                                        {title: 'false is true', status: :failed, result: 'true != false'},
                                                        {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
 
@@ -98,9 +98,10 @@ describe Bridge do
         let(:server_response) { {'out' => '0 failures', 'exit' => 'passed'} }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to include('0 failures') }
+        it { expect(response[:result]).to include('0 failures') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
 
@@ -112,9 +113,10 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to include('0 failures') }
+        it { expect(response[:result]).to include('0 failures') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('Keep up the good work!') }
       end
 
@@ -132,7 +134,8 @@ describe Bridge do
         }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to include('0 failures') }
+        it { expect(response[:result]).to include('0 failures') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
         it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :passed}]) }
         it { expect(response[:feedback]).to eq('') }
@@ -153,7 +156,8 @@ describe Bridge do
         }
 
         it { expect(response[:status]).to eq(:passed_with_warnings) }
-        it { expect(response[:test_results]).to include('0 failures') }
+        it { expect(response[:result]).to include('0 failures') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
         it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :failed}]) }
         it { expect(response[:feedback]).to eq('') }
@@ -164,9 +168,10 @@ describe Bridge do
         let(:server_response) { {'out' => 'should be equal 5 FAILED', 'exit' => 'failed'} }
 
         it { expect(response[:status]).to eq(:failed) }
-        it { expect(response[:test_results]).to include('should be equal 5 FAILED') }
+        it { expect(response[:result]).to include('should be equal 5 FAILED') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
 
@@ -175,9 +180,10 @@ describe Bridge do
         let(:server_response) { {'out' => 'compilation error', 'exit' => 'errored'} }
 
         it { expect(response[:status]).to eq(:errored) }
-        it { expect(response[:test_results]).to include('compilation error') }
+        it { expect(response[:result]).to include('compilation error') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
 
@@ -186,9 +192,10 @@ describe Bridge do
         let(:server_response) { {'out' => 'aborted. memory exceeded', 'exit' => 'aborted'} }
 
         it { expect(response[:status]).to eq(:aborted) }
-        it { expect(response[:test_results]).to include('aborted. memory exceeded') }
+        it { expect(response[:result]).to include('aborted. memory exceeded') }
+        it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([]) }
+        it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
     end
