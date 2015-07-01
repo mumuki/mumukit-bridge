@@ -29,11 +29,21 @@ module Mumukit::Bridge
 
     class Structured < Base
       def build_hash(expectation_results, response)
-        test_results = response.slice('testResults').deep_symbolize_keys
+        test_results = parse_test_results(response['testResults'])
         {test_results_type: :structured,
          test_results: test_results,
          status: global_status(
-             test_results[:testResults].any? { |it| it[:status] == 'failed' } ? :failed : :passed, expectation_results)}
+             test_results[:test_results].any? { |it| it[:status] == :failed } ? :failed : :passed, expectation_results)}
+      end
+
+      private
+
+      def parse_test_results(results)
+        {test_results:
+             results.map { |it| {
+                 title: it['title'],
+                 status: it['status'].to_sym,
+                 result: it['result']} }}
       end
     end
 
