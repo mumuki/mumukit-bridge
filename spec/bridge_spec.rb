@@ -43,7 +43,7 @@ describe Bridge do
         it { expect(response[:status]).to eq(:passed) }
         it { expect(response[:test_results]).to eq(server_response.deep_symbolize_keys) }
         it { expect(response[:test_results_type]).to eq(:structured) }
-        it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: true}] }
+        it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed}] }
         it { expect(response[:feedback]).to eq('') }
 
       end
@@ -78,8 +78,8 @@ describe Bridge do
         it { expect(response[:status]).to eq(:passed_with_warnings) }
         it { expect(response[:test_results]).to eq(server_response.slice('testResults').deep_symbolize_keys) }
         it { expect(response[:test_results_type]).to eq(:structured) }
-        it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: true},
-                                                           {binding: 'foo', inspection: 'HasBinding', result: false}] }
+        it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed},
+                                                           {binding: 'foo', inspection: 'HasBinding', result: :failed}] }
         it { expect(response[:feedback]).to eq('') }
       end
     end
