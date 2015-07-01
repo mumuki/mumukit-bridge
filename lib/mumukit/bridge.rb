@@ -23,8 +23,11 @@ module Mumukit
         parsed_feedback = response['feedback'] || ''
 
         if structured_test_results? response
+          test_results = response.slice('testResults').deep_symbolize_keys
           {test_results_type: :structured,
-           status: global_status('passed', parsed_expectation_results),
+           test_results: test_results,
+           status: global_status(
+               test_results[:testResults].any? { |it| it[:status] == 'failed' } ? :failed : :passed, parsed_expectation_results),
            expectation_results: parsed_expectation_results,
            feedback: parsed_feedback}
         else
@@ -43,7 +46,7 @@ module Mumukit
       end
 
       def global_status(test_status, expectations_results)
-        if test_status == 'passed' && expectations_results.any? { |it| it[:result] == :failed }
+        if test_status.to_sym == :passed && expectations_results.any? { |it| it[:result] == :failed }
           :passed_with_warnings
         else
           test_status.to_sym

@@ -41,7 +41,7 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to eq(server_response.deep_symbolize_keys) }
+        it { expect(response[:test_results]).to eq(server_response.slice('testResults').deep_symbolize_keys) }
         it { expect(response[:test_results_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed}] }
         it { expect(response[:feedback]).to eq('') }
@@ -57,7 +57,7 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:failed) }
-        it { expect(response[:test_results]).to eq(server_response.deep_symbolize_keys) }
+        it { expect(response[:test_results]).to eq(server_response.slice('testResults').deep_symbolize_keys) }
         it { expect(response[:test_results_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to eq([]) }
         it { expect(response[:feedback]).to eq('') }
@@ -89,7 +89,7 @@ describe Bridge do
       context 'when submission is ok' do
         let(:server_response) { {'out' => '0 failures', 'exit' => 'passed'} }
 
-        it { expect(response[:status]).to eq('passed') }
+        it { expect(response[:status]).to eq(:passed) }
         it { expect(response[:test_results]).to include('0 failures') }
         it { expect(response[:test_results_type]).to eq(:unstructured) }
         it { expect(response[:expectation_results]).to eq([]) }
@@ -103,7 +103,7 @@ describe Bridge do
             'feedback' => 'Keep up the good work!'
         } }
 
-        it { expect(response[:status]).to eq('passed') }
+        it { expect(response[:status]).to eq(:passed) }
         it { expect(response[:test_results]).to include('0 failures') }
         it { expect(response[:test_results_type]).to eq(:unstructured) }
         it { expect(response[:expectation_results]).to eq([]) }
@@ -147,7 +147,7 @@ describe Bridge do
         it { expect(response[:status]).to eq(:passed_with_warnings) }
         it { expect(response[:test_results]).to include('0 failures') }
         it { expect(response[:test_results_type]).to eq(:unstructured) }
-        it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :passed}]) }
+        it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :failed}]) }
         it { expect(response[:feedback]).to eq('') }
       end
 
