@@ -1,5 +1,5 @@
 require 'mumukit/bridge/version'
-require 'mumukit/bridge/parser'
+require 'mumukit/bridge/response_type'
 require 'rest_client'
 
 require 'active_support/hash_with_indifferent_access'
@@ -20,7 +20,8 @@ module Mumukit
       #   {test_results: string|json, status: :passed|:failed|:errored|:aborted, expectation_results: [{binding:string, inspection:string, result:symbol}], feedback: string}
       def run_tests!(request)
         response = post_to_server(request)
-        ResponseParser.parse response
+        response_type = ResponseType.for_response response
+        response_type.parse response
       rescue Exception => e
         {result: e.message, status: :errored}
       end
