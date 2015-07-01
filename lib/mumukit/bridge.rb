@@ -4,10 +4,11 @@ require 'rest_client'
 module Mumukit
   module Bridge
     class Bridge
-      attr_accessor :test_runner_url
+      attr_accessor :test_runner_url, :structured
 
       def initialize(test_runner_url)
         @test_runner_url = test_runner_url
+        @structured = false
       end
 
       # Expects a hash
@@ -17,11 +18,12 @@ module Mumukit
       def run_tests!(request)
         response = post_to_server(request)
 
-        {result: response['out'],
-         status: response['exit'],
-         expectation_results: parse_expectation_results(response['expectationResults'] || []),
-         feedback: response['feedback'] || ''}
-
+        if !structured
+          {result: response['out'],
+           status: response['exit'],
+           expectation_results: parse_expectation_results(response['expectationResults'] || []),
+           feedback: response['feedback'] || ''}
+        end
       rescue Exception => e
         {result: e.message, status: :failed}
       end
