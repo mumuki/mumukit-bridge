@@ -17,7 +17,7 @@ module Mumukit
       # Expects a hash
       #  {test: string, extra: string, content: string, expectations: [{binding:string, inspection: string})]}
       # Returns a hash
-      #   {result: string, status: string, expectation_results: [{binding:string, inspection:string, result:symbol}], feedback: string}
+      #   {test_results: string|json, status: :passed|:failed|:errored|:aborted, expectation_results: [{binding:string, inspection:string, result:symbol}], feedback: string}
       def run_tests!(request)
         response = post_to_server(request)
         ResponseParser.parse response
