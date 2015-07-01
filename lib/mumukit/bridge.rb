@@ -19,17 +19,20 @@ module Mumukit
       #   {result: string, status: string, expectation_results: [{binding:string, inspection:string, result:symbol}], feedback: string}
       def run_tests!(request)
         response = post_to_server(request)
+        parsed_expectation_results = parse_expectation_results(response['expectationResults'] || [])
+        parsed_feedback = response['feedback'] || ''
 
         if structured_test_results? response
           {test_results_type: :structured,
-           expectation_results: parse_expectation_results(response['expectationResults'] || []),
-           feedback: response['feedback'] || ''}
+           status: global_status('passed', parsed_expectation_results),
+           expectation_results: parsed_expectation_results,
+           feedback: parsed_feedback}
         else
           {test_results: response['out'],
            test_results_type: :unstructured,
-           status: response['exit'],
-           expectation_results: parse_expectation_results(response['expectationResults'] || []),
-           feedback: response['feedback'] || ''}
+           status: global_status(response['exit'], parsed_expectation_results),
+           expectation_results: parsed_expectation_results,
+           feedback: parsed_feedback}
         end
       rescue Exception => e
         {result: e.message, status: :failed}
