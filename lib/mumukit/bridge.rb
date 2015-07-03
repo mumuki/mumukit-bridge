@@ -1,5 +1,11 @@
 require 'mumukit/bridge/version'
+require 'mumukit/bridge/response_type'
+require 'mumukit/bridge/array'
+require 'mumukit/bridge/boolean'
+
 require 'rest_client'
+
+require 'active_support/core_ext/object'
 
 module Mumukit
   module Bridge
@@ -13,25 +19,17 @@ module Mumukit
       # Expects a hash
       #  {test: string, extra: string, content: string, expectations: [{binding:string, inspection: string})]}
       # Returns a hash
-      #   {result: string, status: string, expectation_results: [{binding:string, inspection:string, result:symbol}], feedback: string}
+      #   {result: string,
+      #    test_results: [{title:string, status:symbol, result:string}],
+      #    status: :passed|:failed|:errored|:aborted|:passed_with_warnings,
+      #    expectation_results: [{binding:string, inspection:string, result:symbol}],
+      #    feedback: string}
       def run_tests!(request)
         response = post_to_server(request)
-
-        {result: response['out'],
-         status: response['exit'],
-         expectation_results: parse_expectation_results(response['expectationResults'] || []),
-         feedback: response['feedback'] || ''}
-
+        response_type = ResponseType.for_response response
+        response_type.parse response
       rescue Exception => e
-        {result: e.message, status: :failed}
-      end
-
-      def parse_expectation_results(results)
-        results.map do |it|
-          {binding: it['expectation']['binding'],
-           inspection: it['expectation']['inspection'],
-           result: it['result'] ? :passed : :failed}
-        end
+        {result: e.message, status: :errored}
       end
 
       def post_to_server(request)
