@@ -5,7 +5,6 @@ require 'mumukit/bridge/boolean'
 
 require 'rest_client'
 
-require 'active_support/hash_with_indifferent_access'
 require 'active_support/core_ext/object'
 
 module Mumukit
