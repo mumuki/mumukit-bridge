@@ -22,9 +22,8 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to eq(test_results: [
-                                                       {title: 'true is true', status: :passed, result: ''},
-                                                       {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''},
+                                                    {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
@@ -43,9 +42,8 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:passed) }
-        it { expect(response[:test_results]).to eq(test_results: [
-                                                       {title: 'true is true', status: :passed, result: ''},
-                                                       {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''},
+                                                    {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed}] }
         it { expect(response[:feedback]).to eq('') }
@@ -61,9 +59,8 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:failed) }
-        it { expect(response[:test_results]).to eq(test_results: [
-                                                       {title: 'false is true', status: :failed, result: 'true != false'},
-                                                       {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:test_results]).to eq([{title: 'false is true', status: :failed, result: 'true != false'},
+                                                    {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
@@ -82,9 +79,8 @@ describe Bridge do
         } }
 
         it { expect(response[:status]).to eq(:passed_with_warnings) }
-        it { expect(response[:test_results]).to eq(test_results: [
-                                                       {title: 'true is true', status: :passed, result: ''},
-                                                       {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''},
+                                                    {title: 'false is false', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed},
                                                            {binding: 'foo', inspection: 'HasBinding', result: :failed}] }

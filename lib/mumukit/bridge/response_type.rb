@@ -33,17 +33,16 @@ module Mumukit::Bridge
         test_results = parse_test_results(response['testResults'])
         {response_type: :structured,
          test_results: test_results,
-         status: test_results[:test_results].fetch_mumuki_status(:status)}
+         status: test_results.fetch_mumuki_status(:status)}
       end
 
       private
 
       def parse_test_results(results)
-        {test_results:
-             results.map { |it| {
-                 title: it['title'],
-                 status: it['status'].to_sym,
-                 result: it['result']} }}
+         results.map { |it| {
+             title: it['title'],
+             status: it['status'].to_sym,
+             result: it['result']} }
       end
     end
 
