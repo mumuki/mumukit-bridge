@@ -5,7 +5,7 @@
 
 # Mumukit::Bridge
 
-TODO: Write a gem description
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Japanese_bridge_in_the_Birmingham_Botanical_Gardens.jpg" alt="bridge" height="250">
 
 ## Installation
 
