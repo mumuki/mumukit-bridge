@@ -25,16 +25,21 @@ module Mumukit
       #    expectation_results: [{binding:string, inspection:string, result:symbol}],
       #    feedback: string}
       def run_tests!(request)
-        response = post_to_server(request, 'test')
-        response_type = ResponseType.for_response response
-        response_type.parse response
-      rescue Exception => e
-        {result: e.message, status: :errored}
+        with_sever_response request, 'test' do |response|
+          response_type = ResponseType.for_response response
+          response_type.parse response
+        end
       end
 
       def run_query!(request)
-        response = post_to_server(request, 'query')
-        {status: response['exit'].to_sym, result: response['out']}
+        with_sever_response request, 'query' do | it |
+          {status: it['exit'].to_sym, result: it['out']}
+        end
+      end
+
+      def with_sever_response(request, route, &action)
+        response = post_to_server(request, route)
+        action.call(response)
       rescue Exception => e
         {result: e.message, status: :errored}
       end
