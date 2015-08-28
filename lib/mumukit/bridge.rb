@@ -25,16 +25,23 @@ module Mumukit
       #    expectation_results: [{binding:string, inspection:string, result:symbol}],
       #    feedback: string}
       def run_tests!(request)
-        response = post_to_server(request)
+        response = post_to_server(request, 'test')
         response_type = ResponseType.for_response response
         response_type.parse response
       rescue Exception => e
         {result: e.message, status: :errored}
       end
 
-      def post_to_server(request)
+      def run_query!(request)
+        response = post_to_server(request, 'query')
+        {status: response['exit'].to_sym, result: response['out']}
+      rescue Exception => e
+        {result: e.message, status: :errored}
+      end
+
+      def post_to_server(request, route)
         JSON.parse RestClient.post(
-                       "#{test_runner_url}/test",
+                       "#{test_runner_url}/#{route}",
                        request.to_json,
                        content_type: :json)
       end
