@@ -1,16 +1,13 @@
-require 'rspec/mocks'
-require_relative '../lib/mumukit/bridge'
+require 'spec_helper'
 
-include Mumukit::Bridge
-
-describe Bridge do
+describe Mumukit::Bridge::Runner do
 
   describe '#run_query!' do
-    let(:bridge) { Bridge.new('http://foo') }
+    let(:bridge) { Mumukit::Bridge::Runner.new('http://foo') }
     let(:request) { {} }
     let(:response) { bridge.run_query!(request) }
 
-    before { expect_any_instance_of(Bridge).to receive(:post_to_server).and_return(server_response) }
+    before { expect_any_instance_of(Mumukit::Bridge::Runner).to receive(:post_to_server).and_return(server_response) }
 
     context 'when submission passed' do
       let(:server_response) { {
