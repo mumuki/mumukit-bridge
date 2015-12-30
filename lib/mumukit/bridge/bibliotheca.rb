@@ -9,6 +9,14 @@ module Mumukit
         get('guides')['guides']
       end
 
+      def runners
+        get('runners')['runners']
+      end
+
+      def languages
+        get('languages')['languages']
+      end
+
       def guide(slug)
         get "guides/#{slug}"
       end
