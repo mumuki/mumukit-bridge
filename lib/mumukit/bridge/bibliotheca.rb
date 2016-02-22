@@ -9,6 +9,10 @@ module Mumukit
         get('guides')['guides']
       end
 
+      def books
+        get('books')['books']
+      end
+
       def runners
         get('runners')['runners']
       end
