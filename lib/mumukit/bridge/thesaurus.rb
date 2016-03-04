@@ -5,14 +5,15 @@ module Mumukit
 
       def initialize(url = 'http://bibliotheca.mumuki.io')
         @url = url
+        @language = {}
       end
 
       def languages
-        get('languages')['languages']
+        @languages ||= get('languages')['languages']
       end
 
       def language(name)
-        get "languages/#{name}"
+        @language[name] ||= get "languages/#{name}"
       end
 
       def get(path)
