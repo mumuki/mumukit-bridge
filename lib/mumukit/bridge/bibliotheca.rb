@@ -1,6 +1,8 @@
 module Mumukit
   module Bridge
     class Bibliotheca
+      attr_accessor :url
+
       def initialize(url = 'http://bibliotheca.mumuki.io')
         @url = url
       end
