@@ -1,24 +1,16 @@
 module Mumukit
   module Bridge
-    class Bibliotheca
+    class Thesaurus
       def initialize(url = 'http://bibliotheca.mumuki.io')
         @url = url
       end
 
-      def guides
-        get('guides')['guides']
+      def languages
+        get('languages')['languages']
       end
 
-      def books
-        get('books')['books']
-      end
-
-      def guide(slug)
-        get "guides/#{slug}"
-      end
-
-      def book(slug)
-        get "books/#{slug}"
+      def language(name)
+        get "languages/#{name}"
       end
 
       def get(path)

@@ -13,7 +13,6 @@ describe Mumukit::Bridge::Bibliotheca do
           {'id' => 'ab0296d7984d80cb', 'slug' => 'pdep-utn/mumuki-logico-tp-sturbacks', 'language' => 'prolog'},
           {'id' => '80d1a82f261ada8c', 'slug' => 'mumuki/guia-funcional-javascript-1', 'language' => 'javascript'}]}
     }
-    
     it { expect(response.size).to eq 2 }
   end
 end
