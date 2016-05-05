@@ -15,6 +15,10 @@ module Mumukit
         get('books')['books']
       end
 
+      def topics
+        get('topics')['topics']
+      end
+
       def guide(slug)
         get "guides/#{slug}"
       end
