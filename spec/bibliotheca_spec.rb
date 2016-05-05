@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe Mumukit::Bridge::Bibliotheca do
+  let(:bridge) { Mumukit::Bridge::Bibliotheca.new('http://foo') }
+  before { expect_any_instance_of(Mumukit::Bridge::Bibliotheca).to receive(:get).and_return(server_response) }
 
   describe '#guides' do
-    let(:bridge) { Mumukit::Bridge::Bibliotheca.new('http://foo') }
     let(:response) { bridge.guides }
-
-    before { expect_any_instance_of(Mumukit::Bridge::Bibliotheca).to receive(:get).and_return(server_response) }
 
     let(:server_response) {
       {'guides' => [
@@ -14,5 +13,16 @@ describe Mumukit::Bridge::Bibliotheca do
           {'id' => '80d1a82f261ada8c', 'slug' => 'mumuki/guia-funcional-javascript-1', 'language' => 'javascript'}]}
     }
     it { expect(response.size).to eq 2 }
+  end
+
+  describe '#topic' do
+    let(:response) { bridge.topic('bar/baz') }
+
+
+    let(:server_response) {
+      {'name' => 'foo', 'lessons' => ['bar/foobar']}
+    }
+
+    it { expect(response['name']).to eq 'foo' }
   end
 end

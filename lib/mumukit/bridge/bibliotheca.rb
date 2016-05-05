@@ -8,27 +8,35 @@ module Mumukit
       end
 
       def guides
-        get('guides')['guides']
+        get_collection 'guides'
       end
 
       def topics
-        get('topics')['topics']
+        get_collection 'topics'
       end
 
       def books
-        get('books')['books']
+        get_collection 'books'
       end
 
       def guide(slug)
-        get "guides/#{slug}"
+        get_element 'guides', slug
       end
 
       def topic(slug)
-        get "topic/#{slug}"
+        get_element 'topics', slug
       end
 
       def book(slug)
-        get "books/#{slug}"
+        get_element 'books', slug
+      end
+
+      def get_collection(name)
+        get(name)[name]
+      end
+
+      def get_element(name, slug)
+        get "#{name}/#{slug}"
       end
 
       def get(path)
