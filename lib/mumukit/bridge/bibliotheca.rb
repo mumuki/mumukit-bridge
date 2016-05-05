@@ -11,16 +11,20 @@ module Mumukit
         get('guides')['guides']
       end
 
-      def books
-        get('books')['books']
-      end
-
       def topics
         get('topics')['topics']
       end
 
+      def books
+        get('books')['books']
+      end
+
       def guide(slug)
         get "guides/#{slug}"
+      end
+
+      def topic(slug)
+        get "topic/#{slug}"
       end
 
       def book(slug)
