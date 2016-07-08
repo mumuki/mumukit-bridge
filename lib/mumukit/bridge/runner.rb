@@ -28,9 +28,15 @@ module Mumukit
       end
 
       def run_query!(request)
-        with_sever_response request, 'query' do | it |
+        with_sever_response request, 'query' do |it|
           {status: it['exit'].to_sym, result: it['out']}
         end
+      end
+
+      def info
+        JSON.parse RestClient.get(
+                       "#{test_runner_url}/info",
+                       content_type: :json)
       end
 
       def with_sever_response(request, route, &action)
