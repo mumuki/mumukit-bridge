@@ -46,12 +46,16 @@ module Mumukit
         {result: e.message, status: :errored}
       end
 
-      def post_to_server(request, route)
-        JSON.parse RestClient.post(
-                       "#{test_runner_url}/#{route}",
-                       request.to_json,
-                       content_type: :json)
+      def post_to_server(request, route, timeout=10)
+        JSON.parse RestClient::Request.new(
+                       method: :post,
+                       url: "#{test_runner_url}/#{route}",
+                       payload: request.to_json,
+                       timeout: timeout,
+                       open_timeout: timeout,
+                       headers: {content_type: :json}).execute()
       end
+
     end
   end
 end
