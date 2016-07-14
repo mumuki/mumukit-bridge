@@ -1,5 +1,6 @@
 require 'rest_client'
-require 'active_support/core_ext/object'
+
+require 'active_support/all'
 
 require_relative './bridge/version'
 require_relative './bridge/runner'

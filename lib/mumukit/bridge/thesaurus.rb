@@ -3,21 +3,18 @@ module Mumukit
     class Thesaurus
       attr_accessor :url
 
-      def initialize(url = 'http://bibliotheca.mumuki.io')
+      def initialize(url = 'http://thesaurus.mumuki.io')
         @url = url
-        @language = {}
       end
 
-      def languages
-        @languages ||= get('languages')['languages']
+      def runners
+        @runners ||= JSON.parse(get('runners'))['runners']
       end
 
-      def language(name)
-        @language[name] ||= get "languages/#{name}"
-      end
+      private
 
-      def get(path)
-        JSON.parse RestClient.get("#{url}/#{path}")
+      def get(resource)
+        RestClient.get("#{url}/#{resource}")
       end
     end
   end
