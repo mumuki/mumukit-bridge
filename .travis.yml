@@ -8,7 +8,7 @@ addons:
 deploy:
   provider: rubygems
   api_key:
-    secure: Rj4sZfGuZRT0ENDMO7nUMajrRaBtOv8W9oN8VBw5l7EoX9CIexIW0SeFEywLCR211sIAZxFLSvhUAmcWZvmtejQc99cJeOzMcci7Bm6HlLk5vX3P26NG1IQ3mDL0Hn3SvU88mp9Ej8/nKpU1MJnJ3+SU67/tNuNtqsZFCqOboUs=
+    secure: GTBol3gRgtzJjXe3SExX2S4K9sVghXY1om6wfhqSrOoDa61HWauLTmzuBr2c43bAdXMDBYZpnXVTuE7wjTWlZzAJ0brIQsq9zW3jZuydnkxj0/2Bo4+ezvGWiVNefQVKT8dCCfqjUWppgfNqc2vMXWsXu67iuvZF9magzCnZvy0=
   gem: mumukit-bridge
   on:
     tags: true
