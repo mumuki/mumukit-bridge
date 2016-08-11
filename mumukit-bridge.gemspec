@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 2.99'
 
   spec.add_dependency 'rest-client'
-  spec.add_dependency 'activesupport', '~> 4'
+  spec.add_dependency 'mumukit-core', '~> 0.1'
 end
