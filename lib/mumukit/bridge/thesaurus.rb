@@ -3,7 +3,7 @@ module Mumukit
     class Thesaurus
       attr_accessor :url
 
-      def initialize(url = 'http://thesaurus.mumuki.io')
+      def initialize(url)
         @url = url
       end
 

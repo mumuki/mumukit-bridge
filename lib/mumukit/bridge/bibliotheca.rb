@@ -3,7 +3,7 @@ module Mumukit
     class Bibliotheca
       attr_accessor :url
 
-      def initialize(url = 'http://bibliotheca.mumuki.io')
+      def initialize(url)
         @url = url
       end
 
