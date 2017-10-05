@@ -33,6 +33,19 @@ module Mumukit
         end
       end
 
+      def run_try!(request)
+        with_sever_response request, 'try' do |it|
+          {
+            status: it['exit'].to_sym,
+            result: it['out'],
+            query_result: it['queryResult'].try do |it |
+              { status: it['status'].to_sym,
+                result: it['result'] }
+            end
+          }
+        end
+      end
+
       def info
         JSON.parse RestClient.get(
                        "#{test_runner_url}/info",
