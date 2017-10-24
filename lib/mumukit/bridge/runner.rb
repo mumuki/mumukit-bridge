@@ -49,20 +49,20 @@ module Mumukit
       def importable_info
         @language_json ||= info.merge('url' => test_runner_url)
         {
-          name: @language_json['name'],
-          comment_type: @language_json['comment_type'],
-          extension: @language_json.dig('language', 'extension'),
-          test_extension: @language_json.dig('test_framework', 'test_extension'),
-          ace_mode: @language_json.dig('language', 'ace_mode'),
-          devicon: @language_json.dig('language', 'icon', 'name'),
-          test_runner_url: @language_json['url'],
+          name:                @language_json['name'],
+          comment_type:        @language_json['comment_type'],
+          test_runner_url:     @language_json['url'],
           output_content_type: @language_json['output_content_type'],
+          prompt:                (@language_json.dig('language', 'prompt') || 'ム') + ' ',
+          extension:              @language_json.dig('language', 'extension'),
+          highlight_mode:         @language_json.dig('language', 'ace_mode'),
           visible_success_output: @language_json.dig('language', 'graphic').present?,
-          feedback: @language_json.dig('features', 'feedback'),
-          highlight_mode: @language_json.dig('language', 'ace_mode'),
-          prompt: (@language_json.dig('language', 'prompt') || 'ム') + ' ',
-          queriable: @language_json.dig('features', 'query'),
-          triable: @language_json.dig('features', 'try')
+          devicon:                @language_json.dig('language', 'icon', 'name'),
+          triable:          @language_json.dig('features', 'try').present?,
+          feedback:         @language_json.dig('features', 'feedback').present?,
+          queriable:        @language_json.dig('features', 'query').present?,
+          stateful_console: @language_json.dig('features', 'stateful').present?,
+          test_extension: @language_json.dig('test_framework', 'test_extension')
         }
       end
 
