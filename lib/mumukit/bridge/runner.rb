@@ -63,7 +63,8 @@ module Mumukit
           feedback:         @language_json.dig('features', 'feedback').present?,
           queriable:        @language_json.dig('features', 'query').present?,
           stateful_console: @language_json.dig('features', 'stateful').present?,
-          test_extension: @language_json.dig('test_framework', 'test_extension')
+          test_extension: @language_json.dig('test_framework', 'test_extension'),
+          test_template: @language_json.dig('test_framework', 'template')
         }
       end
 
