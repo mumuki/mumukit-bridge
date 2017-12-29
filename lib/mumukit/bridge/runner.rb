@@ -65,9 +65,9 @@ module Mumukit
           stateful_console: @language_json.dig('features', 'stateful').present?,
           test_extension: @language_json.dig('test_framework', 'test_extension'),
           test_template: @language_json.dig('test_framework', 'template'),
-          assets_js: @language_json.dig('assets', 'js'),
-          assets_html: @language_json.dig('assets', 'html'),
-          assets_css: @language_json.dig('assets', 'css')
+          assets_js_urls: @language_json.dig('assets_urls', 'js') || [],
+          assets_html_urls: @language_json.dig('assets_urls', 'html') || [],
+          assets_css_urls: @language_json.dig('assets_urls', 'css') || []
         }
       end
 
