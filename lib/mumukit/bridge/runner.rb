@@ -64,7 +64,10 @@ module Mumukit
           queriable:        @language_json.dig('features', 'query').present?,
           stateful_console: @language_json.dig('features', 'stateful').present?,
           test_extension: @language_json.dig('test_framework', 'test_extension'),
-          test_template: @language_json.dig('test_framework', 'template')
+          test_template: @language_json.dig('test_framework', 'template'),
+          assets_js: @language_json.dig('assets', 'js'),
+          assets_html: @language_json.dig('assets', 'html'),
+          assets_css: @language_json.dig('assets', 'css')
         }
       end
 
