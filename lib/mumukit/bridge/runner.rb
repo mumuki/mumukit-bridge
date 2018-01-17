@@ -65,9 +65,12 @@ module Mumukit
           stateful_console: @language_json.dig('features', 'stateful').present?,
           test_extension: @language_json.dig('test_framework', 'test_extension'),
           test_template: @language_json.dig('test_framework', 'template'),
-          assets_js_urls: @language_json.dig('assets_urls', 'js') || [],
-          assets_html_urls: @language_json.dig('assets_urls', 'html') || [],
-          assets_css_urls: @language_json.dig('assets_urls', 'css') || []
+          assets_js_urls: get_assets('js'),
+          assets_html_urls: get_assets('html'),
+          assets_css_urls: get_assets('css'),
+          custom_editor_js_urls: get_assets('js', 'custom_editor_'),
+          custom_editor_html_urls: get_assets('html', 'custom_editor_'),
+          custom_editor_css_urls: get_assets('css', 'custom_editor_')
         }
       end
 
@@ -94,6 +97,15 @@ module Mumukit
                        headers: {content_type: :json}).execute()
       end
 
+      private
+
+      def get_assets(type, prefix = '')
+        absolutize(@language_json.dig("#{prefix}assets_urls", type) || [])
+      end
+
+      def absolutize(urls)
+        urls.map { |url| "#{test_runner_url}/#{url}"}
+      end
     end
   end
 end
