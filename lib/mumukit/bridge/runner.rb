@@ -74,10 +74,8 @@ module Mumukit
         }
       end
 
-      def info
-        JSON.parse RestClient.get(
-                       "#{test_runner_url}/info",
-                       content_type: :json)
+      def info(options={})
+        JSON.parse raw_get_to_server(:info, options.merge(content_type: :json))
       end
 
       def with_sever_response(request, route, &action)
@@ -85,6 +83,10 @@ module Mumukit
         action.call(response)
       rescue Exception => e
         {result: e.message, status: :errored}
+      end
+
+      def raw_get_to_server(route, options)
+        RestClient.get("#{test_runner_url}/#{route}", options)
       end
 
       def post_to_server(request, route)
