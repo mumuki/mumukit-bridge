@@ -74,6 +74,10 @@ module Mumukit
         }
       end
 
+      def assets(path, options={})
+        raw_get_to_server "assets/#{path}", options
+      end
+
       def info(options={})
         JSON.parse raw_get_to_server(:info, options.merge(content_type: :json))
       end
