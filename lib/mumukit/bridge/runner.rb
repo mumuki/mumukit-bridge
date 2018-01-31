@@ -50,27 +50,27 @@ module Mumukit
       def importable_info
         @language_json ||= info.merge('url' => test_runner_url)
         {
-          name:                @language_json['name'],
-          comment_type:        @language_json['comment_type'],
-          test_runner_url:     @language_json['url'],
-          output_content_type: @language_json['output_content_type'],
+          name:                   @language_json['name'],
+          comment_type:           @language_json['comment_type'],
+          test_runner_url:        @language_json['url'],
+          output_content_type:    @language_json['output_content_type'],
           prompt:                (@language_json.dig('language', 'prompt') || 'ム') + ' ',
           extension:              @language_json.dig('language', 'extension'),
           highlight_mode:         @language_json.dig('language', 'ace_mode'),
           visible_success_output: @language_json.dig('language', 'graphic').present?,
           devicon:                @language_json.dig('language', 'icon', 'name'),
-          triable:          @language_json.dig('features', 'try').present?,
-          feedback:         @language_json.dig('features', 'feedback').present?,
-          queriable:        @language_json.dig('features', 'query').present?,
-          stateful_console: @language_json.dig('features', 'stateful').present?,
-          test_extension: @language_json.dig('test_framework', 'test_extension'),
-          test_template: @language_json.dig('test_framework', 'template'),
-          layout_js_urls: get_assets_for(:layout, 'js'),
-          layout_html_urls: get_assets_for(:layout, 'html'),
-          layout_css_urls: get_assets_for(:layout, 'css'),
-          editor_js_urls: get_assets_for(:editor, 'js'),
-          editor_html_urls: get_assets_for(:editor, 'html'),
-          editor_css_urls: get_assets_for(:editor, 'css')
+          triable:                @language_json.dig('features', 'try').present?,
+          feedback:               @language_json.dig('features', 'feedback').present?,
+          queriable:              @language_json.dig('features', 'query').present?,
+          stateful_console:       @language_json.dig('features', 'stateful').present?,
+          test_extension:         @language_json.dig('test_framework', 'test_extension'),
+          test_template:          @language_json.dig('test_framework', 'template'),
+          layout_js_urls:         get_assets_for(:layout, 'js'),
+          layout_html_urls:       get_assets_for(:layout, 'html'),
+          layout_css_urls:        get_assets_for(:layout, 'css'),
+          editor_js_urls:         get_assets_for(:editor, 'js'),
+          editor_html_urls:       get_assets_for(:editor, 'html'),
+          editor_css_urls:        get_assets_for(:editor, 'css')
         }
       end
 
