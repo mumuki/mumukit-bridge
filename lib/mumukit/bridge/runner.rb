@@ -22,24 +22,24 @@ module Mumukit
       #    expectation_results: [{binding:string, inspection:string, result:symbol}],
       #    feedback: string}
       def run_tests!(request)
-        with_sever_response request, 'test' do |response|
+        with_server_response request, 'test' do |response|
           response_type = ResponseType.for_response response
           response_type.parse response
         end
       end
 
       def run_query!(request)
-        with_sever_response request, 'query' do |it|
+        with_server_response request, 'query' do |it|
           {status: it['exit'].to_sym, result: it['out']}
         end
       end
 
       def run_try!(request)
-        with_sever_response request, 'try' do |it|
+        with_server_response request, 'try' do |it|
           {
             status: it['exit'].to_sym,
             result: it['out'],
-            query_result: it['queryResult'].try do |it |
+            query_result: it['queryResult'].try do |it|
               { status: it['status'].to_sym,
                 result: it['result'] }
             end
@@ -82,11 +82,11 @@ module Mumukit
         JSON.parse raw_get_to_server(:info, options.merge(content_type: :json))
       end
 
-      def with_sever_response(request, route, &action)
+      def with_server_response(request, route, &action)
         response = post_to_server(request, route)
         action.call(response)
       rescue Exception => e
-        {result: e.message, status: :errored}
+        {result: e.message, status: :aborted}
       end
 
       def raw_get_to_server(route, options)
