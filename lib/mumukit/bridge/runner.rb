@@ -91,8 +91,10 @@ module Mumukit
       private
 
       def with_server_response(request, route, headers, &action)
-        response = do_post(route, request, headers)
+        response = do_json_post(route, request, headers)
         action.call(response)
+      rescue RestClient::ExceptionWithResponse => e
+        {result: "#{e.message}: #{parse_exception_with_response(e)}", status: :aborted}
       rescue Exception => e
         {result: e.message, status: :aborted}
       end
@@ -101,7 +103,7 @@ module Mumukit
         RestClient.get "#{test_runner_url}/#{route}", build_headers(headers)
       end
 
-      def do_post(route, request, headers)
+      def do_json_post(route, request, headers)
         JSON.parse RestClient::Request.new(
                        method: :post,
                        url: "#{test_runner_url}/#{route}",
@@ -125,6 +127,12 @@ module Mumukit
 
       def json_content_type(headers)
         headers.merge(content_type: :json)
+      end
+
+      def parse_exception_with_response(error)
+        (JSON.parse(error.response)['out'] rescue nil) ||
+          error.response.presence ||
+          "<no reason>"
       end
     end
   end
