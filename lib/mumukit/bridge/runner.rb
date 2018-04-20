@@ -91,7 +91,7 @@ module Mumukit
       private
 
       def with_server_response(request, route, &action)
-        response = do_post(request, route)
+        response = do_post(route, request)
         action.call(response)
       rescue Exception => e
         {result: e.message, status: :aborted}
@@ -101,7 +101,7 @@ module Mumukit
         RestClient.get("#{test_runner_url}/#{route}", options)
       end
 
-      def do_post(request, route)
+      def do_post(route, request)
         JSON.parse RestClient::Request.new(
                        method: :post,
                        url: "#{test_runner_url}/#{route}",
