@@ -6,11 +6,12 @@ require_relative './runner/boolean'
 module Mumukit
   module Bridge
     class Runner
-      attr_accessor :test_runner_url
+      attr_accessor :test_runner_url, :timeout, :headers
 
-      def initialize(test_runner_url, timeout=10)
+      def initialize(test_runner_url, timeout=10, headers={})
         @test_runner_url = test_runner_url
         @timeout = timeout
+        @headers = headers
       end
 
       # Expects a hash
