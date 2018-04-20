@@ -81,27 +81,27 @@ module Mumukit
       end
 
       def assets(path, options={})
-        raw_get_to_server "assets/#{path}", options
+        do_get "assets/#{path}", options
       end
 
       def info(options={})
-        JSON.parse raw_get_to_server(:info, options.merge(content_type: :json))
+        JSON.parse do_get(:info, options.merge(content_type: :json))
       end
 
       private
 
       def with_server_response(request, route, &action)
-        response = post_to_server(request, route)
+        response = do_post(request, route)
         action.call(response)
       rescue Exception => e
         {result: e.message, status: :aborted}
       end
 
-      def raw_get_to_server(route, options)
+      def do_get(route, options)
         RestClient.get("#{test_runner_url}/#{route}", options)
       end
 
-      def post_to_server(request, route)
+      def do_post(request, route)
         JSON.parse RestClient::Request.new(
                        method: :post,
                        url: "#{test_runner_url}/#{route}",

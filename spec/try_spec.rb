@@ -8,7 +8,7 @@ describe Mumukit::Bridge::Runner do
     let(:request) { {} }
     let(:response) { bridge.run_try!(request) }
 
-    before { expect_any_instance_of(Mumukit::Bridge::Runner).to receive(:post_to_server).and_return(server_response) }
+    before { expect_any_instance_of(Mumukit::Bridge::Runner).to receive(:do_post).and_return(server_response) }
 
     context 'when goal achived' do
       let(:server_response) { {
