@@ -23,7 +23,7 @@ module Mumukit
       #    expectation_results: [{binding:string, inspection:string, result:symbol}],
       #    feedback: string}
       def run_tests!(request, headers={})
-        with_server_response request, 'test', headers do |response|
+        with_server_response 'test', request, headers do |response|
           response_type = ResponseType.for_response response
           response_type.parse response
         end
@@ -35,13 +35,13 @@ module Mumukit
       #   {result: string,
       #    status: :passed|:failed|:errored|:aborted}
       def run_query!(request, headers={})
-        with_server_response request, 'query', headers do |it|
+        with_server_response 'query', request, headers do |it|
           {status: it['exit'].to_sym, result: it['out']}
         end
       end
 
       def run_try!(request, headers={})
-        with_server_response request, 'try', headers do |it|
+        with_server_response 'try', request, headers do |it|
           {
             status: it['exit'].to_sym,
             result: it['out'],
@@ -90,7 +90,7 @@ module Mumukit
 
       private
 
-      def with_server_response(request, route, headers, &action)
+      def with_server_response(route, request, headers, &action)
         response = do_json_post(route, request, headers)
         action.call(response)
       rescue RestClient::ExceptionWithResponse => e
