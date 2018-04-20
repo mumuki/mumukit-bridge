@@ -85,7 +85,7 @@ module Mumukit
       end
 
       def info(headers={})
-        JSON.parse do_get(:info, headers.merge(content_type: :json))
+        JSON.parse do_get(:info, json_content_type(headers))
       end
 
       private
@@ -98,7 +98,7 @@ module Mumukit
       end
 
       def do_get(route, headers)
-        RestClient.get("#{test_runner_url}/#{route}", headers)
+        RestClient.get "#{test_runner_url}/#{route}", build_headers(headers)
       end
 
       def do_post(route, request, headers)
@@ -108,7 +108,7 @@ module Mumukit
                        payload: request.to_json,
                        timeout: @timeout,
                        open_timeout: @timeout,
-                       headers: headers.merge(content_type: :json)).execute
+                       headers: build_headers(json_content_type(headers))).execute
       end
 
       def get_assets_for(kind, content_type)
@@ -117,6 +117,14 @@ module Mumukit
 
       def absolutize(urls)
         urls.map { |url| "#{test_runner_url}/#{url}"}
+      end
+
+      def build_headers(headers)
+        self.headers.merge(headers)
+      end
+
+      def json_content_type(headers)
+        headers.merge(content_type: :json)
       end
     end
   end
