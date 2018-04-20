@@ -88,6 +88,8 @@ module Mumukit
         JSON.parse raw_get_to_server(:info, options.merge(content_type: :json))
       end
 
+      private
+
       def with_server_response(request, route, &action)
         response = post_to_server(request, route)
         action.call(response)
@@ -108,8 +110,6 @@ module Mumukit
                        open_timeout: @timeout,
                        headers: {content_type: :json}).execute()
       end
-
-      private
 
       def get_assets_for(kind, content_type)
         absolutize(@language_json.dig("#{kind}_assets_urls", content_type) || [])
