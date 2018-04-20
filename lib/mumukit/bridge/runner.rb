@@ -28,6 +28,11 @@ module Mumukit
         end
       end
 
+      # Expects a hash
+      #  {query: string, extra: string, content: string}
+      # Returns a hash
+      #   {result: string,
+      #    status: :passed|:failed|:errored|:aborted}
       def run_query!(request)
         with_server_response request, 'query' do |it|
           {status: it['exit'].to_sym, result: it['out']}
