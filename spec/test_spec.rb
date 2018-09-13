@@ -4,7 +4,7 @@ describe Mumukit::Bridge::Runner do
 
   describe '#run_tests!' do
     let(:bridge) { Mumukit::Bridge::Runner.new('http://foo') }
-    let(:request) { {} }
+    let(:request) { { test: '...' } }
     let(:response) { bridge.run_tests!(request) }
 
     before { expect_any_instance_of(Mumukit::Bridge::Runner).to receive(:do_json_post).and_return(server_response) }
@@ -82,6 +82,12 @@ describe Mumukit::Bridge::Runner do
         it { expect(response[:expectation_results]).to eq [{binding: 'bar', inspection: 'HasBinding', result: :passed},
                                                            {binding: 'foo', inspection: 'HasBinding', result: :failed}] }
         it { expect(response[:feedback]).to eq('') }
+
+        context 'when the exercise has no tests' do
+          let (:request) {{ test: '' }}
+
+          it { expect(response[:status]).to eq(:failed) }
+        end
       end
     end
 
@@ -154,6 +160,12 @@ describe Mumukit::Bridge::Runner do
         it { expect(response[:response_type]).to eq(:unstructured) }
         it { expect(response[:expectation_results]).to eq([{binding: 'foo', inspection: 'HasBinding', result: :failed}]) }
         it { expect(response[:feedback]).to eq('') }
+
+        context 'when the exercise has no tests' do
+          let (:request) {{ test: '' }}
+
+          it { expect(response[:status]).to eq(:failed) }
+        end
       end
 
 

@@ -1,19 +1,19 @@
 module Mumukit::Bridge
   module ResponseType
     class Base
-      def parse(response)
+      def parse(response, request)
         expectation_results = parse_expectation_results(response['expectationResults'] || [])
         feedback = response['feedback'] || ''
         result = response['out'] || ''
 
         build_hash(response).
             merge(feedback: feedback, expectation_results: expectation_results, result: result).
-            update(status: expectation_results.fetch_mumuki_status(:result)) { |_, t, e| global_status(t, e) }
+            update(status: expectation_results.fetch_mumuki_status(:result)) { |_, t, e| global_status(t, e, request) }
       end
 
-      def global_status(test_status, expectation_status)
+      def global_status(test_status, expectation_status, request)
         if test_status == :passed && expectation_status == :failed
-          :passed_with_warnings
+          request[:test].blank? ? :failed : :passed_with_warnings
         else
           test_status
         end
