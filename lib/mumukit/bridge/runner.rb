@@ -25,7 +25,7 @@ module Mumukit
       def run_tests!(request, headers={})
         with_server_response 'test', request, headers do |response|
           response_type = ResponseType.for_response response
-          response_type.parse response
+          response_type.parse response, request
         end
       end
 
