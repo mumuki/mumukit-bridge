@@ -91,7 +91,6 @@ describe Mumukit::Bridge::Runner do
       end
     end
 
-
     context 'unstructured data' do
       context 'when submission is ok' do
         let(:server_response) { {'out' => '0 failures', 'exit' => 'passed'} }
@@ -200,6 +199,25 @@ describe Mumukit::Bridge::Runner do
         it { expect(response[:result]).to include('aborted. memory exceeded') }
         it { expect(response[:test_results]).to be_empty }
         it { expect(response[:response_type]).to eq(:unstructured) }
+        it { expect(response[:expectation_results]).to be_empty }
+        it { expect(response[:feedback]).to eq('') }
+      end
+    end
+
+    context 'mixed data' do
+      context 'when tests are ok but the exit code is failed' do
+        let(:server_response) { {
+            'testResults' => [
+                {'title' => 'true is true', 'status' => 'passed', 'result' => ''}
+            ],
+            'out' => 'extra html',
+            'exit' => 'failed'
+        } }
+
+        it { expect(response[:status]).to eq(:failed) }
+        it { expect(response[:result]).to include('extra html') }
+        it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''}]) }
+        it { expect(response[:response_type]).to eq(:mixed) }
         it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
       end
