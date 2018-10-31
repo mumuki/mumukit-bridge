@@ -39,10 +39,10 @@ module Mumukit::Bridge
       private
 
       def parse_test_results(results)
-         results.map { |it| {
-             title: it['title'],
-             status: it['status'].to_sym,
-             result: it['result']} }
+        results.map { |it| {
+            title: it['title'],
+            status: it['status'].to_sym,
+            result: it['result']} }
       end
     end
 
@@ -54,12 +54,28 @@ module Mumukit::Bridge
       end
     end
 
+    class Mixed < Structured
+      def build_hash(response)
+        super(response).merge response_type: :mixed, status: response['exit'].to_sym
+      end
+    end
+
     def self.structured_test_results?(response)
       response['testResults'].present?
     end
 
+    def self.mixed_test_results?(response)
+      structured_test_results?(response) && response['out'].present?
+    end
+
     def self.for_response(response)
-      structured_test_results?(response) ? Structured.new : Unstructured.new
+      if mixed_test_results?(response)
+        Mixed.new
+      elsif structured_test_results?(response)
+        Structured.new
+      else
+        Unstructured.new
+      end
     end
   end
 end
