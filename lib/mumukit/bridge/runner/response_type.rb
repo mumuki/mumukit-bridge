@@ -12,7 +12,7 @@ module Mumukit::Bridge
       end
 
       def global_status(test_status, expectation_status, request)
-        if test_status == :passed && expectation_status == :failed
+        if test_status.passed? && expectation_status.failed?
           request[:test].blank? ? :failed : :passed_with_warnings
         else
           test_status
@@ -64,7 +64,7 @@ module Mumukit::Bridge
       private
 
       def status(tests_status, output_status)
-        tests_status == :passed && output_status == :passed ? :passed : :failed
+        tests_status.passed? && output_status.passed? ? :passed : :failed
       end
     end
 
