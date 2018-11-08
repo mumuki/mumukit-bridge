@@ -205,6 +205,23 @@ describe Mumukit::Bridge::Runner do
     end
 
     context 'mixed data' do
+      context 'when the exit code is ok and tests are ok' do
+        let(:server_response) { {
+            'testResults' => [
+                {'title' => 'true is true', 'status' => 'passed', 'result' => ''}
+            ],
+            'out' => 'extra html',
+            'exit' => 'passed'
+        } }
+
+        it { expect(response[:status]).to eq(:passed) }
+        it { expect(response[:result]).to include('extra html') }
+        it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''}]) }
+        it { expect(response[:response_type]).to eq(:mixed) }
+        it { expect(response[:expectation_results]).to be_empty }
+        it { expect(response[:feedback]).to eq('') }
+      end
+
       context 'when tests are ok but the exit code is failed' do
         let(:server_response) { {
             'testResults' => [
@@ -217,6 +234,23 @@ describe Mumukit::Bridge::Runner do
         it { expect(response[:status]).to eq(:failed) }
         it { expect(response[:result]).to include('extra html') }
         it { expect(response[:test_results]).to eq([{title: 'true is true', status: :passed, result: ''}]) }
+        it { expect(response[:response_type]).to eq(:mixed) }
+        it { expect(response[:expectation_results]).to be_empty }
+        it { expect(response[:feedback]).to eq('') }
+      end
+
+      context 'when the exit code is ok but tests are failing' do
+        let(:server_response) { {
+            'testResults' => [
+                {'title' => 'true is false', 'status' => 'failed', 'result' => 'true is not false'}
+            ],
+            'out' => 'extra html',
+            'exit' => 'passed'
+        } }
+
+        it { expect(response[:status]).to eq(:failed) }
+        it { expect(response[:result]).to include('extra html') }
+        it { expect(response[:test_results]).to eq([{title: 'true is false', status: :failed, result: 'true is not false'}]) }
         it { expect(response[:response_type]).to eq(:mixed) }
         it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }

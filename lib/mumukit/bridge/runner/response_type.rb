@@ -56,7 +56,15 @@ module Mumukit::Bridge
 
     class Mixed < Structured
       def build_hash(response)
-        super(response).merge response_type: :mixed, status: response['exit'].to_sym
+        structured_results = super(response)
+        structured_results.merge response_type: :mixed,
+                                 status: status(structured_results[:status], response['exit'].to_sym)
+      end
+
+      private
+
+      def status(tests_status, output_status)
+        tests_status == :passed && output_status == :passed ? :passed : :failed
       end
     end
 
