@@ -1,6 +1,6 @@
 require 'rest_client'
 
-require 'active_support/all'
+require 'mumukit/core'
 
 require_relative './bridge/version'
 require_relative './bridge/runner'

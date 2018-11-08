@@ -12,7 +12,7 @@ module Mumukit::Bridge
       end
 
       def global_status(test_status, expectation_status, request)
-        if test_status == :passed && expectation_status == :failed
+        if test_status.passed? && expectation_status.failed?
           request[:test].blank? ? :failed : :passed_with_warnings
         else
           test_status
@@ -39,10 +39,10 @@ module Mumukit::Bridge
       private
 
       def parse_test_results(results)
-         results.map { |it| {
-             title: it['title'],
-             status: it['status'].to_sym,
-             result: it['result']} }
+        results.map { |it| {
+            title: it['title'],
+            status: it['status'].to_sym,
+            result: it['result']} }
       end
     end
 
@@ -54,12 +54,36 @@ module Mumukit::Bridge
       end
     end
 
+    class Mixed < Structured
+      def build_hash(response)
+        structured_results = super(response)
+        structured_results.merge response_type: :mixed,
+                                 status: status(structured_results[:status], response['exit'].to_sym)
+      end
+
+      private
+
+      def status(tests_status, output_status)
+        tests_status.passed? && output_status.passed? ? :passed : :failed
+      end
+    end
+
     def self.structured_test_results?(response)
       response['testResults'].present?
     end
 
+    def self.mixed_test_results?(response)
+      structured_test_results?(response) && response['out'].present?
+    end
+
     def self.for_response(response)
-      structured_test_results?(response) ? Structured.new : Unstructured.new
+      if mixed_test_results?(response)
+        Mixed.new
+      elsif structured_test_results?(response)
+        Structured.new
+      else
+        Unstructured.new
+      end
     end
   end
 end
