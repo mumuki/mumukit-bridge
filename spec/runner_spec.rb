@@ -50,6 +50,7 @@ describe Mumukit::Bridge::Runner do
                                                       triable: false,
                                                       feedback: false,
                                                       queriable: true,
+                                                      multifile: false,
                                                       stateful_console: true,
                                                       test_extension: ".rb",
                                                       test_template: nil,
@@ -112,6 +113,7 @@ describe Mumukit::Bridge::Runner do
                                                     triable: false,
                                                     feedback: true,
                                                     queriable: false,
+                                                    multifile: false,
                                                     stateful_console: false,
                                                     test_extension: "yml",
                                                     test_template: nil,
@@ -121,6 +123,64 @@ describe Mumukit::Bridge::Runner do
                                                     editor_js_urls: ["http://foo/javascripts/aa.js"],
                                                     editor_html_urls: ["http://foo/bb.html", "http://foo/cc.html"],
                                                     editor_css_urls: ["http://foo/stylesheets/dd.css"] }
+    end
+
+    context 'when language has multifile feature' do
+      let(:response) {
+        {
+          'name' => 'java',
+          'version' => '1.7.1',
+          'escualo_base_version' => 'v79',
+          'escualo_service_version' => nil,
+          'mumukit_version' => '2.32.0',
+          'output_content_type' => 'markdown',
+          'features' => {
+              'query' => false,
+              'expectations' => true,
+              'feedback' => true,
+              'secure' => false,
+              'multifile' => true,
+              'sandboxed' => true,
+              'structured' => true
+          },
+          'language' => {
+              'name' => 'java',
+              'version' => 'openjdk-8',
+              'extension' => 'java',
+              'ace_mode' => 'java'
+          },
+          'test_framework' => {
+              'name' => 'junit',
+              'test_extension' => 'java'
+          },
+          'url' => 'https://java.runners.mumuki.io/info'
+        }
+      }
+
+      it {
+        expect(bridge.importable_info).to json_eq name: "java",
+                                                  comment_type: nil,
+                                                  test_runner_url: "http://foo",
+                                                  output_content_type: "markdown",
+                                                  prompt: "ム ",
+                                                  extension: "java",
+                                                  highlight_mode: "java",
+                                                  visible_success_output: false,
+                                                  devicon: nil,
+                                                  triable: false,
+                                                  feedback: true,
+                                                  queriable: false,
+                                                  multifile: true,
+                                                  stateful_console: false,
+                                                  test_extension: "java",
+                                                  test_template: nil,
+                                                  layout_js_urls: [],
+                                                  layout_html_urls: [],
+                                                  layout_css_urls: [],
+                                                  editor_js_urls: [],
+                                                  editor_html_urls: [],
+                                                  editor_css_urls: []
+      }
     end
   end
 
