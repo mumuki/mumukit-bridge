@@ -59,7 +59,9 @@ describe Mumukit::Bridge::Runner do
                                                       layout_css_urls: [],
                                                       editor_js_urls: [],
                                                       editor_html_urls: [],
-                                                      editor_css_urls: [] }
+                                                      editor_css_urls: [],
+                                                      layout_shows_loading_content: false,
+                                                      editor_shows_loading_content: false}
     end
 
     context 'when language is graphical' do
@@ -86,7 +88,8 @@ describe Mumukit::Bridge::Runner do
         'editor_assets_urls' => {
             'js' => ['javascripts/aa.js'],
             'html' => ['bb.html', 'cc.html'],
-            'css' => ['stylesheets/dd.css']
+            'css' => ['stylesheets/dd.css'],
+            'shows_loading_content' => true
         },
         'language' => {
             'name' => 'gobstones',
@@ -122,7 +125,9 @@ describe Mumukit::Bridge::Runner do
                                                     layout_css_urls: ["http://foo/stylesheets/d.css"],
                                                     editor_js_urls: ["http://foo/javascripts/aa.js"],
                                                     editor_html_urls: ["http://foo/bb.html", "http://foo/cc.html"],
-                                                    editor_css_urls: ["http://foo/stylesheets/dd.css"] }
+                                                    editor_css_urls: ["http://foo/stylesheets/dd.css"],
+                                                    layout_shows_loading_content: false,
+                                                    editor_shows_loading_content: true}
     end
 
     context 'when language has multifile feature' do
@@ -179,8 +184,9 @@ describe Mumukit::Bridge::Runner do
                                                   layout_css_urls: [],
                                                   editor_js_urls: [],
                                                   editor_html_urls: [],
-                                                  editor_css_urls: []
-      }
+                                                  editor_css_urls: [],
+                                                  layout_shows_loading_content: false,
+                                                  editor_shows_loading_content: false}
     end
   end
 
