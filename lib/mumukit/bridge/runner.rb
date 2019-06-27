@@ -86,18 +86,6 @@ module Mumukit
                        headers: build_headers(json_content_type(headers))).execute
       end
 
-      def get_assets_for(kind, content_type)
-        absolutize(get_asset_field(kind, content_type) || [])
-      end
-
-      def get_asset_field(kind, field)
-        @language_json.dig("#{kind}_assets_urls", field)
-      end
-
-      def absolutize(urls)
-        urls.map { |url| "#{test_runner_url}/#{url}"}
-      end
-
       def build_headers(headers)
         self.headers.merge(headers)
       end
