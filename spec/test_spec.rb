@@ -63,6 +63,23 @@ describe Mumukit::Bridge::Runner do
         it { expect(response[:feedback]).to eq('') }
       end
 
+      context 'when submission failed with summary' do
+        let(:server_response) { {
+            'testResults' => [
+                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {key: 'unexpected_result'}},
+                {'title' => 'false is false', 'status' => 'passed', 'result' => ''},
+            ]
+        } }
+
+        it { expect(response[:status]).to eq(:failed) }
+        it { expect(response[:test_results]).to eq([{title: 'false is true', status: :failed, result: 'true != false', summary: {key: 'unexpected_result'}},
+                                                    {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:response_type]).to eq(:structured) }
+        it { expect(response[:expectation_results]).to be_empty }
+        it { expect(response[:feedback]).to eq('') }
+      end
+
+
       context 'when submission passed with warnings' do
         let(:server_response) { {
             'testResults' => [

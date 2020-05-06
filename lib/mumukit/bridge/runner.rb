@@ -18,7 +18,7 @@ module Mumukit
       #  {test: string, extra: string, content: string, expectations: [{binding:string, inspection: string})]}
       # Returns a hash
       #   {result: string,
-      #    test_results: [{title:string, status:symbol, result:string}],
+      #    test_results: [{title:string, status:symbol, result:string, summary:hash}],
       #    status: :passed|:failed|:errored|:aborted|:passed_with_warnings,
       #    expectation_results: [{binding:string, inspection:string, result:symbol}],
       #    feedback: string}
