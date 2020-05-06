@@ -66,7 +66,7 @@ describe Mumukit::Bridge::Runner do
       context 'when submission failed with summary' do
         let(:server_response) { {
             'testResults' => [
-                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {key: 'unexpected_result'}},
+                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {'key' => 'unexpected_result'}},
                 {'title' => 'false is false', 'status' => 'passed', 'result' => ''},
             ]
         } }
@@ -84,8 +84,8 @@ describe Mumukit::Bridge::Runner do
       context 'when submission failed with empty or illegal summary' do
         let(:server_response) { {
             'testResults' => [
-                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {key: nil}},
-                {'title' => 'nil is true', 'status' => 'failed', 'result' => 'nil != true', 'summary' => {key: ''}},
+                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {'key' => nil}},
+                {'title' => 'nil is true', 'status' => 'failed', 'result' => 'nil != true', 'summary' => {'key' => ''}},
                 {'title' => '1 is 1', 'status' => 'passed', 'result' => '', 'summary' => 'dfsdfsdf' },
                 {'title' => 'false is false', 'status' => 'passed', 'result' => '', 'summary' => {} }
             ]

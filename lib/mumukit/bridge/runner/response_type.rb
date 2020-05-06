@@ -40,7 +40,7 @@ module Mumukit::Bridge
 
       def parse_test_results(results)
         results.map do |it|
-          { summary: safe_compact(it['summary']).presence }
+          { summary: safe_compact(it['summary'])&.symbolize_keys.presence }
             .compact
             .merge(
               title: it['title'],
