@@ -66,14 +66,18 @@ describe Mumukit::Bridge::Runner do
       context 'when submission failed with summary' do
         let(:server_response) { {
             'testResults' => [
-                {'title' => 'false is true', 'status' => 'failed', 'result' => 'true != false', 'summary' => {'type' => 'unexpected_result'}},
-                {'title' => 'false is false', 'status' => 'passed', 'result' => ''},
+                {'title' => 'f(1)', 'status' => 'failed', 'result' => '<error>', 'summary' => {'type' => 'unexpected_result'}},
+                {'title' => 'f(2)', 'status' => 'failed', 'result' => '<error>', 'summary' => {'message' => 'check your tests'}},
+                {'title' => 'f(3)', 'status' => 'failed', 'result' => '<error>', 'summary' => {'type' => 'undefined_reference', 'message' => 'There are undefined references'}},
+                {'title' => 'f(4)', 'status' => 'passed', 'result' => ''},
             ]
         } }
 
         it { expect(response[:status]).to eq(:failed) }
-        it { expect(response[:test_results]).to eq([{title: 'false is true', status: :failed, result: 'true != false', summary: {type: 'unexpected_result'}},
-                                                    {title: 'false is false', status: :passed, result: ''}]) }
+        it { expect(response[:test_results]).to eq([{title: 'f(1)', status: :failed, result: '<error>', summary: {type: 'unexpected_result'}},
+                                                    {title: 'f(2)', status: :failed, result: '<error>', summary: {message: 'check your tests'}},
+                                                    {title: 'f(3)', status: :failed, result: '<error>', summary: {type: 'undefined_reference', message: 'There are undefined references'}},
+                                                    {title: 'f(4)', status: :passed, result: ''}]) }
         it { expect(response[:response_type]).to eq(:structured) }
         it { expect(response[:expectation_results]).to be_empty }
         it { expect(response[:feedback]).to eq('') }
