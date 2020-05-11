@@ -39,10 +39,18 @@ module Mumukit::Bridge
       private
 
       def parse_test_results(results)
-        results.map { |it| {
-            title: it['title'],
-            status: it['status'].to_sym,
-            result: it['result']} }
+        results.map do |it|
+          { summary: safe_compact(it['summary'])&.symbolize_keys.presence }
+            .compact
+            .merge(
+              title: it['title'],
+              status: it['status'].to_sym,
+              result: it['result'])
+        end
+      end
+
+      def safe_compact(hash)
+        hash.try { |it| it.transform_values(&:presence).compact rescue nil }
       end
     end
 
