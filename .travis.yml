@@ -2,6 +2,7 @@ language: ruby
 env: RACK_ENV=development CODECLIMATE_REPO_TOKEN=46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
 rvm:
 - 2.6.3
+before_install: gem install bundler -v 2.0.2
 addons:
   code_climate:
     repo_token: 46b1437490b7273b5c7a72c1ac692c7d511aa3794adcf41d4cc7c574bbf35382
