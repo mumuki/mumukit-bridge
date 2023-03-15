@@ -1,10 +1,12 @@
 module Mumukit
   module Bridge
     class Bibliotheca
-      attr_accessor :url
+      attr_accessor :url, :headers
 
-      def initialize(url)
-        @url = url
+      def initialize(test_runner_url, timeout=10, headers={})
+        @test_runner_url = test_runner_url
+        @timeout = timeout
+        @headers = headers
       end
 
       def guides
@@ -40,7 +42,7 @@ module Mumukit
       end
 
       def get(path)
-        JSON.parse RestClient.get("#{url}/#{path}")
+        JSON.parse RestClient.get("#{url}/#{path}", self.headers)
       end
     end
   end
