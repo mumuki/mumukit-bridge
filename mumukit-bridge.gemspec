@@ -23,4 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rest-client'
   spec.add_dependency 'mumukit-core', '~> 1.10'
+
+  spec.required_ruby_version = '~> 3.1'
 end
