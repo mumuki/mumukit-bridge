@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'mumukit-bridge'
   spec.version       = Mumukit::Bridge::VERSION
   spec.authors       = ['Franco Leonardo Bulgarelli']
-  spec.email         = ['flbulgarelli@yahoo.com.ar']
+  spec.email         = ['franco@mumuki.org']
   spec.summary       = 'Library for connecting to a Mumuki test runner'
-  spec.homepage      = 'http://github.com/uqbar-project/mumukit-bridge'
+  spec.homepage      = 'http://github.com/mumuki/mumukit-bridge'
   spec.license       = "MIT"
 
   spec.files         = Dir['lib/**/**']
