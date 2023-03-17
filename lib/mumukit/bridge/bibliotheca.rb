@@ -3,8 +3,8 @@ module Mumukit
     class Bibliotheca
       attr_accessor :url, :headers
 
-      def initialize(test_runner_url, timeout=10, headers={})
-        @test_runner_url = test_runner_url
+      def initialize(url, timeout=10, headers={})
+        @url = url
         @timeout = timeout
         @headers = headers
       end
