@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
 
-  spec.add_dependency 'rest-client', '~> 2.1'
+  spec.add_dependency 'rest-client', '~> 2.0'
   spec.add_dependency 'mumukit-core', '~> 1.20'
 
   spec.required_ruby_version = '>= 3.0'
