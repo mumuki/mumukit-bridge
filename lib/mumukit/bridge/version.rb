@@ -1,5 +1,5 @@
 module Mumukit
   module Bridge
-    VERSION = '4.3.0'
+    VERSION = '4.3.1'
   end
 end
